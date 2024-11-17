@@ -37,7 +37,7 @@ elif [ "$os_name" == "Linux" ]; then
     if command -v nvidia-smi &> /dev/null; then
         echo "The operating system is Linux with CUDA installed."
         # Install required packages with CUDA support and specific versions
-        pip install torch==2.5.1+cu12.4 torchvision==0.20.1+cu12.4 --extra-index-url https://download.pytorch.org/whl/cu124
+        pip install torch==2.5.1+cu124 torchvision==0.20.1+cu124 --extra-index-url https://download.pytorch.org/whl/cu124
     else
         echo "The operating system is Linux but CUDA is not installed."
         # Install required packages without CUDA support and specific versions
