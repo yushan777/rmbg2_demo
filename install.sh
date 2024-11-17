@@ -1,27 +1,28 @@
 #!/bin/bash
 
-#!/bin/bash
-
-# RMBG2 does not support python 3.13 (yet) so we will Find the 
+# RMBG2 does not support Python 3.13 (yet), so we will find the 
 # highest installed Python version below 3.13 and use that
-PYTHON=$(which -a python3.{0..13} | head -n 1)
+PYTHON=$(which -a python3.{0..12} | head -n 1)
 
 if [ -z "$PYTHON" ]; then
-    echo "No Python version below 3.12 found."
+    echo "No Python version below 3.13 found."
     exit 1
 fi
 
-# Create the venv
+# Create the virtual environment
 $PYTHON -m venv venv
 echo "Virtual environment created with $($PYTHON --version)"
 
-# activate the virtual environment
+# Activate the virtual environment
 source venv/bin/activate
 echo "Virtual environment activated"
 
+# Install required dependencies for the script
+pip install --upgrade pip
+pip install huggingface-hub
+
 # Check if the OS is macOS or Linux
 os_name="$(uname)"
-
 echo $os_name
 
 # Common packages to install with specific versions
@@ -48,10 +49,23 @@ else
     echo "Unknown operating system."
 fi
 
-# Download required files into the current directory
-curl -O https://huggingface.co/briaai/RMBG-2.0/resolve/main/BiRefNet_config.py
-curl -O https://huggingface.co/briaai/RMBG-2.0/resolve/main/birefnet.py
-curl -O https://huggingface.co/briaai/RMBG-2.0/resolve/main/config.json
-curl -O https://huggingface.co/briaai/RMBG-2.0/resolve/main/model.safetensors
+# Download required files using Hugging Face Hub
+echo "Downloading required files from Hugging Face repository..."
+python -c "
+from huggingface_hub import hf_hub_download
 
-echo -e "\e[35mactivate the venv before running with 'source venv/bin/activate'\e[0m"
+repo_id = 'briaai/RMBG-2.0'
+files = [
+    'BiRefNet_config.py',
+    'birefnet.py',
+    'config.json',
+    'model.safetensors'
+]
+
+for file in files:
+    print(f'Downloading {file}...')
+    hf_hub_download(repo_id=repo_id, filename=file, local_dir='.', local_dir_use_symlinks=False)
+"
+echo "All files downloaded successfully."
+
+echo -e "\e[35mActivate the venv before running with 'source venv/bin/activate'\e[0m"
