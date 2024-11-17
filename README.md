@@ -1,26 +1,27 @@
-# clone this repo
+# Clone this repo
 ```
 git clone https://github.com/yushan777/rmbg2_demo.git
 cd rmbg2_demo
 ```
 
-# run installer
+# Run installer
 ```
 chmod +x install.sh
 ./install.sh
 ```
 
-# activate environment
+# Usage
+## Activate environment
 ```
 source venv/bin/activate
 ```
 
-# remove background from a single image
+## Remove background from a single image
 ```
 python3 rmbg.py -i 'path/to/image.png'
 ```
 
-# remove background from images in a directory 
+## Remove background from images in a directory 
 ```
 python3 rmbg_batch.py -i 'path/to/dir_of_images'
 ```
