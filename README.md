@@ -16,9 +16,14 @@ chmod +x install.sh
 source venv/bin/activate
 ```
 
-## Remove background from a single image
+## Remove background from a single image (transparency)
 ```
 python3 rmbg.py -i 'path/to/image.png'
+```
+
+## Remove background from a single image (color mask)
+```
+python3 rmbg_color_mask.py -i 'path/to/image.png'
 ```
 
 ## Remove background from images in a directory 
